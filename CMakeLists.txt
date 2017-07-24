@@ -72,7 +72,6 @@ if(WIN32)
     install(FILES ${LIBPNG_DLL_DEBUG} ${ZLIB_DLL_RELEASE}
         ${LIBTIFF_DLL_RELEASE} DESTINATION . CONFIGURATIONS Debug)
 endif()
-
 add_subdirectory(libs)
 add_subdirectory(apps)
 #add_subdirectory(tests)
