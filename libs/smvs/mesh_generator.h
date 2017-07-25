@@ -58,7 +58,7 @@ private:
 
     Options const& opts;
 
-    ThreadPool thread_pool;
+    ThreadPool_smvs thread_pool;
     std::vector<mve::View::Ptr> views;
     std::vector<ViewProjection> view_projs;
 };

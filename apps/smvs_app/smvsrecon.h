@@ -27,16 +27,16 @@
 #include "util/system.h"
 #include "util/timer.h"
 
-#include "thread_pool.h"
-#include "stereo_view.h"
-#include "depth_optimizer.h"
-#include "mesh_generator.h"
-#include "view_selection.h"
-#include "sgm_stereo.h"
+#include "smvs/thread_pool.h"
+#include "smvs/stereo_view.h"
+#include "smvs/depth_optimizer.h"
+#include "smvs/mesh_generator.h"
+#include "smvs/view_selection.h"
+#include "smvs/sgm_stereo.h"
 
 /* -------------------------------------------------------------------------- */
 
-struct AppSettings
+struct AppSettings_smvs
 {
     std::string scene_dname;
     std::vector<int> view_ids;
@@ -69,10 +69,10 @@ struct AppSettings
     math::Vec3f aabb_min = math::Vec3f(0.0f);
     math::Vec3f aabb_max = math::Vec3f(0.0f);
 
-    AppSettings (void) {}
+    AppSettings_smvs (void) {}
 };
 
-AppSettings
+AppSettings_smvs
 args_to_settings(int argc, char** argv)
 {
     /* Setup argument parser. */
@@ -141,7 +141,7 @@ args_to_settings(int argc, char** argv)
     args.parse(argc, argv);
 
     /* Init default settings. */
-    AppSettings conf;
+    AppSettings_smvs conf;
     conf.scene_dname = args.get_nth_nonopt(0);
 
     /* Scan arguments. */
@@ -277,7 +277,7 @@ args_to_settings(int argc, char** argv)
 
 /* -------------------------------------------------------------------------- */
 
-void generate_mesh (AppSettings const& conf, mve::Scene::Ptr scene,
+void generate_mesh (AppSettings_smvs const& conf, mve::Scene::Ptr scene,
                     std::string const& input_name, std::string const& dm_name)
 {
     std::cout << "Generating ";
@@ -346,7 +346,7 @@ void generate_mesh (AppSettings const& conf, mve::Scene::Ptr scene,
 
 /* -------------------------------------------------------------------------- */
 
-void reconstruct_sgm_depth_for_view (AppSettings const& conf,
+void reconstruct_sgm_depth_for_view (AppSettings_smvs const& conf,
                                      smvs::StereoView::Ptr main_view,
                                      std::vector<smvs::StereoView::Ptr> neighbors,
                                      mve::Bundle::ConstPtr bundle = nullptr)
@@ -392,7 +392,7 @@ void reconstruct_sgm_depth_for_view (AppSettings const& conf,
 }
 
 /* -------------------------------------------------------------------------- */
-int perform(AppSettings conf){
+int perform(AppSettings_smvs conf){
     /* Start processing */
 
     /* Load scene */
@@ -554,7 +554,7 @@ int perform(AppSettings conf){
                   << " views that are already reconstructed." << std::endl;
 
     /* Create reconstruction threads */
-    ThreadPool thread_pool(std::max<std::size_t>(conf.num_threads, 1));
+    ThreadPool_smvs thread_pool(std::max<std::size_t>(conf.num_threads, 1));
 
     /* View selection */
     smvs::ViewSelection::Options view_select_opts;

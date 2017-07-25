@@ -43,12 +43,12 @@
     std::cout << std::endl;
 */
 
-class ThreadPool
+class ThreadPool_smvs
 {
 public:
     /* Constructor creating specified number of threads */
-    explicit ThreadPool (std::size_t num_threads);
-    ~ThreadPool (void);
+    explicit ThreadPool_smvs (std::size_t num_threads);
+    ~ThreadPool_smvs (void);
 
     /* add task function to queue */
     template<class F, class... Args>
@@ -75,7 +75,7 @@ private:
 /* ---------------------------------------------------------------- */
 
 inline
-ThreadPool::ThreadPool(std::size_t num_threads)
+ThreadPool_smvs::ThreadPool_smvs(std::size_t num_threads)
     : stop(false)
 {
     for (std::size_t i = 0; i < num_threads; ++i)
@@ -110,7 +110,7 @@ ThreadPool::ThreadPool(std::size_t num_threads)
 }
 
 inline
-ThreadPool::~ThreadPool ()
+ThreadPool_smvs::~ThreadPool_smvs ()
 {
     /* acquire queue lock */
     {
@@ -126,7 +126,7 @@ ThreadPool::~ThreadPool ()
 }
 
 template<class F, class... Args>
-auto ThreadPool::add_task(F&& f, Args&&... args)
+auto ThreadPool_smvs::add_task(F&& f, Args&&... args)
     -> std::future<typename std::result_of<F(Args...)>::type>
 {
     /* get return type of function */
