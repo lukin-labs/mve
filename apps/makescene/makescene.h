@@ -395,7 +395,7 @@ import_bundle_nvm (AppSettings const& conf)
         mve_cam.flen = mve_cam.flen / static_cast<float>(maxdim);
 
         mve::ByteImage::Ptr undist = mve::image::image_undistort_vsfm<uint8_t>
-                (image, mve_cam.flen, nvm_cam.radial_distortion);
+                (image, mve_cam.flen, -nvm_cam.radial_distortion);
         undist = limit_image_size<uint8_t>(undist, conf.max_pixels);
         view->set_image(undist, "undistorted");
         view->set_camera(mve_cam);
