@@ -469,7 +469,7 @@ int perform(AppSettings_smvs conf){
             }
             view->save_view();
         }
-        std::exit(EXIT_SUCCESS);
+        return 0;
     }
 
     /* Scale input images */
@@ -747,6 +747,6 @@ int perform(AppSettings_smvs conf){
     if (!conf.recon_only)
         generate_mesh(conf, scene, input_name, output_name);
 
-    std::exit(EXIT_SUCCESS);
+    return 0;
 }
 
